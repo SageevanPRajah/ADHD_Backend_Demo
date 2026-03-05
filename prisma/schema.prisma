@@ -76,7 +76,14 @@ model Assessment {
   patient   Patient  @relation(fields: [patientId], references: [id])
 
   game      GameType
-  payload   Json
+  adhdScore Float
+  probability Float
+  derivedFeatures Json
+  
+  age       Int?
+  gender    String?
+  rounds    Int?
+  group     String?
 
   createdAt DateTime @default(now())
 }

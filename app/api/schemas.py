@@ -35,3 +35,25 @@ class PatientLoginIn(BaseModel):
 class TokenOut(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+class StrokeModel(BaseModel):
+    type: str  # 'start', 'move', 'end'
+    x: float
+    y: float
+    timestamp: float
+
+
+class HandwritingSessionIn(BaseModel):
+    grade: str
+    activity: str
+    instruction: str
+    penSize: float
+    timestamp: str  # e.g., "2026-03-01T12:56:47.268Z"
+    strokes: List[StrokeModel]
+
+
+class HandwritingPredictionOut(BaseModel):
+    prediction: str  # e.g., "ADHD", "No ADHD"
+    probability: float  # e.g., 0.72
+    risk_level: str  # e.g., "Moderate"

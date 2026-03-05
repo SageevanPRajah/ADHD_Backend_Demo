@@ -13,8 +13,12 @@ from app.api.schemas import (
     PatientCreateOut,
     PatientLoginIn,
     TokenOut,
+    HandwritingSessionIn,
+    HandwritingPredictionOut,
 )
 from app.core.security import create_patient_token
+from app.services.handwriting_service import handwriting_service
+
 
 pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -165,3 +169,19 @@ async def parent_me(patient=Depends(require_parent)):
         "child_name": patient.childName,
         "contact_email": patient.contactEmail,
     }
+
+
+@router.post("/handwriting/predict", response_model=HandwritingPredictionOut)
+async def predict_handwriting_adhd_risk(payload: HandwritingSessionIn):
+    """
+    Receives handwriting session data (strokes, etc.) and returns an ADHD risk prediction.
+    """
+    result = handwriting_service.predict_risk(payload)
+    if "Error" in result.get("prediction", ""):
+        raise HTTPException(status_code=500, detail="Error performing prediction")
+        
+    return HandwritingPredictionOut(
+        prediction=result["prediction"],
+        probability=result["probability"],
+        risk_level=result["risk_level"]
+    )

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException
 from app.api.deps import require_parent, get_db
-from app.services.ml_service import predict_from_video_file
+from app.services.pose_ml_service import predict_from_video_file
 
 router = APIRouter()
 

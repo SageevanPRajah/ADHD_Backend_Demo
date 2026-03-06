@@ -10,8 +10,8 @@ import tempfile
 # -------------------------
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "model", "rf_model.joblib")
-SCALER_PATH = os.path.join(BASE_DIR, "model", "scaler.joblib")
+MODEL_PATH = os.path.join(BASE_DIR, "Pose_model", "rf_model.joblib")
+SCALER_PATH = os.path.join(BASE_DIR, "Pose_model", "scaler.joblib")
 
 rf_model = joblib.load(MODEL_PATH)
 scaler = joblib.load(SCALER_PATH)
